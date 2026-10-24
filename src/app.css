@@ -1,0 +1,175 @@
+:root {
+  --bg: #eaf4f2;
+  --card: #ffffff;
+  --card-dim: #f2f6f5;
+  --ink: #15302e;
+  --muted: #5d7472;
+  --line: #d3e1de;
+  --accent: #0f6e6a;
+  --accent-soft: #d4ecea;
+  --good: #2e9c5a;
+  --good-soft: #9fd6b3;
+  --warn: #d9480f;
+  --warn-soft: #fde4d6;
+  --info-soft: #dde8fb;
+  --water: #bfe1ea;
+  --water-line: #5aa7bb;
+  --mud: #b59c74;
+  --muted-fish: #c3d1ce;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e1c1b;
+    --card: #172826;
+    --card-dim: #132220;
+    --ink: #e5f1ef;
+    --muted: #93aaa7;
+    --line: #2a403d;
+    --accent: #4cc4bb;
+    --accent-soft: #1e3d3a;
+    --good: #4cc47e;
+    --good-soft: #2c6b47;
+    --warn: #ff8a50;
+    --warn-soft: #43261a;
+    --info-soft: #1d2b44;
+    --water: #1f4a55;
+    --water-line: #4f9fb3;
+    --mud: #5a4b35;
+    --muted-fish: #34504c;
+    color-scheme: dark;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 17px;
+  line-height: 1.45;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.kid {
+  font-size: 19px;
+}
+
+a {
+  color: var(--accent);
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  color: inherit;
+}
+
+h1 {
+  font-size: 1.6rem;
+  margin: 0.4rem 0 0.4rem;
+}
+
+h2 {
+  font-size: 1.05rem;
+  margin: 0.2rem 0 0.5rem;
+}
+
+.page {
+  padding: 1rem 16px 1.5rem;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.center {
+  text-align: center;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.primary,
+.as-button {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  padding: 0.75rem 1.2rem;
+  font-weight: 700;
+}
+
+.primary:disabled {
+  opacity: 0.45;
+}
+
+.ghost {
+  background: none;
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  padding: 0.7rem 1rem;
+  font-weight: 600;
+}
+
+.seg {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  background: var(--bg);
+  border-radius: 14px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.seg button {
+  border: none;
+  background: none;
+  border-radius: 10px;
+  padding: 0.6rem;
+  font-weight: 600;
+}
+
+.seg button.on {
+  background: var(--card);
+  color: var(--accent);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.chip {
+  background: var(--accent-soft);
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.95rem;
+}
+
+.badge {
+  display: inline-block;
+  border-radius: 12px;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.badge.warn {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+
+.badge.info {
+  background: var(--info-soft);
+}

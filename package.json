@@ -1,0 +1,20 @@
+{
+  "name": "fish-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Family fishing app for Dutch canals and rivers: fish guide, gear helper, rules and profiles.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.3.1",
+    "svelte": "^5.57.2",
+    "vite": "^8.3.5",
+    "vite-plugin-pwa": "^2.0.0",
+    "vitest": "^5.0.5"
+  }
+}
