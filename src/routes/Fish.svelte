@@ -4,7 +4,7 @@
   import { speciesById } from '../data/species.js';
   import { rigs, baits } from '../data/gear.js';
   import { closedSeasons, warningsFor } from '../data/rules.js';
-  import { addCatch, catchCount, catchesOf, removeCatch } from '../lib/model.js';
+  import { addCatch, catchCount, catchesOf, removeCatch, openSessionFor } from '../lib/model.js';
   import FishArt from '../components/FishArt.svelte';
   import Stars from '../components/Stars.svelte';
   import Speak from '../components/Speak.svelte';
@@ -18,11 +18,14 @@
   const rig = $derived(fish ? rigs[fish.rig] : null);
   const thisMonth = new Date().getMonth();
   let celebrate = $state(false);
+  let addedTo = $state(null);
 
   function caught() {
     if (!profile) return;
     const first = count === 0;
-    addCatch(app, profile.id, fish.id);
+    const trip = openSessionFor(app, profile.id);
+    addCatch(app, profile.id, fish.id, new Date(), { sessionId: trip?.id ?? null });
+    addedTo = trip;
     persist();
     if (first) {
       celebrate = true;
@@ -73,6 +76,7 @@
         <p class="center muted">
           {t('caughtTimes', { n: count })} · <button class="link" onclick={undo}>{t('undoCatch')}</button>
         </p>
+        {#if addedTo}<p class="center"><a href="#/session/{addedTo.id}">🛶 {t('addedToTrip')}</a></p>{/if}
       {/if}
     {/if}
 

@@ -8,6 +8,9 @@
   import Gear from './routes/Gear.svelte';
   import Rules from './routes/Rules.svelte';
   import Settings from './routes/Settings.svelte';
+  import Sessions from './routes/Sessions.svelte';
+  import Session from './routes/Session.svelte';
+  import SessionEdit from './routes/SessionEdit.svelte';
 
   const profile = $derived(activeProfile());
   const kid = $derived(profile?.kind === 'child');
@@ -20,6 +23,7 @@
   const tabs = [
     { path: '/', icon: '🎣', label: 'navNow' },
     { path: '/book', icon: '📖', label: 'navBook' },
+    { path: '/sessions', icon: '🛶', label: 'navTrips', also: ['/session', '/session-edit'] },
     { path: '/gear', icon: '🧰', label: 'navGear' },
     { path: '/rules', icon: '📋', label: 'navRules' }
   ];
@@ -41,6 +45,12 @@
       <Profiles />
     {:else if route.path === '/fish'}
       {#key route.params.id}<Fish id={route.params.id} {kid} />{/key}
+    {:else if route.path === '/sessions'}
+      <Sessions {kid} />
+    {:else if route.path === '/session'}
+      {#key route.params.id}<Session id={route.params.id} />{/key}
+    {:else if route.path === '/session-edit'}
+      {#key route.params.id}<SessionEdit id={route.params.id} />{/key}
     {:else if route.path === '/book'}
       <Book />
     {:else if route.path === '/gear'}
@@ -57,7 +67,7 @@
   {#if profile && route.path !== '/profiles'}
     <nav class="tabs">
       {#each tabs as tab}
-        <a href="#{tab.path}" class:on={route.path === tab.path || (tab.path === '/' && route.path === '/fish')}>
+        <a href="#{tab.path}" class:on={route.path === tab.path || tab.also?.includes(route.path) || (tab.path === '/' && route.path === '/fish')}>
           <span class="ti">{tab.icon}</span>
           <span>{t(tab.label)}</span>
         </a>
@@ -109,7 +119,7 @@
     left: 0;
     right: 0;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     background: var(--card);
     border-top: 1px solid var(--line);
     padding-bottom: env(safe-area-inset-bottom);

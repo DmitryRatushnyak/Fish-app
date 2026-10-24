@@ -3,6 +3,7 @@
   import { t, tr } from '../lib/i18n.js';
   import { species, speciesById } from '../data/species.js';
   import { caughtSpecies, catchesOf, removeCatch } from '../lib/model.js';
+  import { shortDate } from '../lib/dates.js';
   import FishArt from '../components/FishArt.svelte';
 
   const profile = $derived(activeProfile());
@@ -23,8 +24,6 @@
     persist();
   }
 
-  const when = (iso) =>
-    new Date(iso).toLocaleDateString(app.settings.lang === 'en' ? 'en-GB' : 'nl-NL', { day: 'numeric', month: 'short', year: 'numeric' });
 </script>
 
 <section class="page">
@@ -44,7 +43,7 @@
             <span class="mini">{#if fish}<FishArt art={fish.art} id="mine-{c.id}" />{/if}</span>
             <span>
               <strong>{fish ? tr(fish.name) : c.speciesId}</strong>
-              <span class="muted date">{when(c.at)}</span>
+              <span class="muted date">{shortDate(c.at)}</span>
             </span>
           </a>
           <button class="ghost del" class:danger={asking === c.id} onclick={() => remove(c)} aria-label={t('remove')}>

@@ -8,6 +8,7 @@ export const emptyData = () => ({
   households: [],
   profiles: [],
   catches: [],
+  sessions: [],
   settings: { lang: 'nl', activeProfileId: null }
 });
 
