@@ -4,7 +4,7 @@
   import { speciesById } from '../data/species.js';
   import { rigs, baits } from '../data/gear.js';
   import { closedSeasons, warningsFor } from '../data/rules.js';
-  import { addCatch, catchCount } from '../lib/model.js';
+  import { addCatch, catchCount, catchesOf, removeCatch } from '../lib/model.js';
   import FishArt from '../components/FishArt.svelte';
   import Stars from '../components/Stars.svelte';
   import Speak from '../components/Speak.svelte';
@@ -28,6 +28,12 @@
       celebrate = true;
       setTimeout(() => (celebrate = false), 2600);
     }
+  }
+
+  function undo() {
+    const last = catchesOf(app, profile.id).find((c) => c.speciesId === fish.id);
+    if (last) removeCatch(app, last.id);
+    persist();
   }
 
   function warningText(w) {
@@ -63,7 +69,11 @@
       <button class="primary catch" onclick={caught} disabled={warnings.some((w) => w.type === 'closed')}>
         🎣 {t('iCaughtIt')}
       </button>
-      {#if count > 0}<p class="center muted">{t('caughtTimes', { n: count })}</p>{/if}
+      {#if count > 0}
+        <p class="center muted">
+          {t('caughtTimes', { n: count })} · <button class="link" onclick={undo}>{t('undoCatch')}</button>
+        </p>
+      {/if}
     {/if}
 
     <div class="grid">
@@ -173,6 +183,13 @@
     font-size: 1.4rem;
     padding: 1rem;
     margin: 0.5rem 0;
+  }
+  .link {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--accent);
+    text-decoration: underline;
   }
   .grid {
     display: grid;

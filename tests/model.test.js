@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { emptyData, createLocalAdapter } from '../src/lib/storage.js';
-import { addProfile, addCatch, caughtSpecies, removeProfile } from '../src/lib/model.js';
+import { addProfile, addCatch, caughtSpecies, removeProfile, removeCatch, catchesOf } from '../src/lib/model.js';
 import { species } from '../src/data/species.js';
 import { fishForNow } from '../src/lib/season.js';
 
@@ -22,6 +22,16 @@ describe('profiles and catches', () => {
     expect(caughtSpecies(data, dad.id).size).toBe(0);
     removeProfile(data, son.id);
     expect(data.catches).toHaveLength(0);
+  });
+
+  it('deletes one catch and lists newest first', () => {
+    const data = emptyData();
+    const son = addProfile(data, { name: 'Son', kind: 'child' });
+    const old = addCatch(data, son.id, 'baars', new Date(2026, 5, 1));
+    const recent = addCatch(data, son.id, 'brasem', new Date(2026, 6, 1));
+    expect(catchesOf(data, son.id).map((c) => c.id)).toEqual([recent.id, old.id]);
+    removeCatch(data, old.id);
+    expect([...caughtSpecies(data, son.id)]).toEqual(['brasem']);
   });
 
   it('saves and loads through the storage adapter', () => {

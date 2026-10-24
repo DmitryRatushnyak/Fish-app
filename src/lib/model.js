@@ -39,6 +39,15 @@ export function addCatch(data, profileId, speciesId, at = new Date()) {
   return entry;
 }
 
+export function removeCatch(data, catchId) {
+  data.catches = data.catches.filter((c) => c.id !== catchId);
+}
+
+// Newest first.
+export function catchesOf(data, profileId) {
+  return data.catches.filter((c) => c.profileId === profileId).sort((a, b) => b.at.localeCompare(a.at));
+}
+
 export function caughtSpecies(data, profileId) {
   return new Set(data.catches.filter((c) => c.profileId === profileId).map((c) => c.speciesId));
 }

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { lastSaturdayOfMay, isInSeason, warningsFor } from '../src/data/rules.js';
 import { speciesById } from '../src/data/species.js';
+import { vispasLink } from '../src/lib/vispas.js';
 
 describe('closed seasons', () => {
   it('finds the last Saturday of May', () => {
@@ -21,5 +22,15 @@ describe('closed seasons', () => {
     expect(perchMay.map((w) => w.type)).toEqual(['closed', 'lureBan', 'minSize']);
     const pikeOct = warningsFor(speciesById.snoek, new Date(2026, 9, 24));
     expect(pikeOct.map((w) => w.type)).toEqual(['release']);
+  });
+});
+
+describe('VISpas link', () => {
+  it('opens the app on Android with a store fallback', () => {
+    const link = vispasLink('Mozilla/5.0 (Linux; Android 14; Pixel 8)');
+    expect(link).toMatch(/^intent:.*package=nl\.visplanner;.*browser_fallback_url=https%3A%2F%2Fplay\.google\.com/);
+  });
+  it('goes to the App Store on iPhone', () => {
+    expect(vispasLink('Mozilla/5.0 (iPhone; CPU iPhone OS 18_0)')).toContain('apps.apple.com');
   });
 });
