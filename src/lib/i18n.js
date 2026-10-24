@@ -10,6 +10,7 @@ const strings = {
   save: { nl: 'Opslaan', en: 'Save' },
   cancel: { nl: 'Annuleren', en: 'Cancel' },
   remove: { nl: 'Verwijderen', en: 'Remove' },
+  confirmShort: { nl: 'Zeker weten?', en: 'Are you sure?' },
   confirmRemove: { nl: 'Weet je het zeker? Alle vangsten van deze visser gaan ook weg.', en: 'Are you sure? All catches of this angler are removed too.' },
   navNow: { nl: 'Nu', en: 'Now' },
   navBook: { nl: 'Visboek', en: 'Fish book' },

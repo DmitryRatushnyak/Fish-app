@@ -4,11 +4,14 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 // GitHub Pages serves the app from /Fish-app/. Override with BASE=/ for other hosts.
 const base = process.env.BASE ?? '/Fish-app/';
+// PREVIEW=1 builds without the service worker, for hosts that do not allow one.
+const preview = process.env.PREVIEW === '1';
 
 export default defineConfig({
   base,
   plugins: [
     svelte(),
+    !preview &&
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['icon.svg'],

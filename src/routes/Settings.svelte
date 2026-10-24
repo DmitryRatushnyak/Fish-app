@@ -9,8 +9,15 @@
     persist();
   }
 
+  // Two taps to remove: the first asks, the second removes.
+  let asking = $state(null);
+
   function remove(p) {
-    if (!confirm(`${p.name}: ${t('confirmRemove')}`)) return;
+    if (asking !== p.id) {
+      asking = p.id;
+      return;
+    }
+    asking = null;
     removeProfile(app, p.id);
     persist();
     if (!app.settings.activeProfileId) go('/profiles');
@@ -34,8 +41,9 @@
       {#each app.profiles as p (p.id)}
         <li>
           <span class="who"><span class="av">{p.avatar}</span> {p.name} <span class="muted">· {t(p.kind)}</span></span>
-          <button class="ghost small" onclick={() => remove(p)}>{t('remove')}</button>
+          <button class="ghost small" class:danger={asking === p.id} onclick={() => remove(p)}>{asking === p.id ? t('confirmShort') : t('remove')}</button>
         </li>
+        {#if asking === p.id}<li class="muted note">{t('confirmRemove')}</li>{/if}
       {/each}
     </ul>
     <a class="primary as-button" href="#/profiles">{t('switchProfile')}</a>
@@ -57,6 +65,13 @@
   }
   .av {
     font-size: 1.6rem;
+  }
+  .danger {
+    border-color: var(--warn);
+    color: var(--warn);
+  }
+  .note {
+    font-size: 0.9rem;
   }
   .small {
     padding: 0.35rem 0.7rem;
